@@ -6,7 +6,7 @@ import PerfumeShowcase from '@/components/perfumes/PerfumeShowcase';
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#050507]">
+    <main className="min-h-screen bg-[#f4f5f8]">
       <Hero />
       <FeaturedLaptops />
       <TrustPillars />

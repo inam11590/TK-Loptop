@@ -1,356 +1,183 @@
-"use client";
+'use client';
 
-import React, { useEffect } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import {
-  ShoppingBag,
-  X,
-  Plus,
-  Minus,
-  Trash2,
-  ArrowRight,
-  Truck,
-  CheckCircle2,
-  ShieldCheck,
-  Cpu,
-} from "lucide-react";
-import { useCart } from "@/context/CartContext";
-import { Button } from "@/components/ui/Button";
+import React from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { X, ShoppingBag, Trash2, Plus, Minus, ArrowRight, MessageCircle } from 'lucide-react';
+import { useCart } from '@/context/CartContext';
+
+const WA_ACTUAL_NUMBER = '923159255165';
+const WA_DISPLAY_NUMBER = '0300-0000000';
 
 export function CartDrawer() {
-  const router = useRouter();
-  const {
-    items,
-    isCartOpen,
-    closeCart,
-    removeItem,
-    updateQuantity,
-    subtotal,
-    totalItems,
-    lastAddedToast,
-    clearToast,
-  } = useCart();
+  const { isCartOpen, closeCart, items, removeItem, updateQuantity, subtotal, totalItems } = useCart();
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isCartOpen) {
-        closeCart();
+  if (!isCartOpen) return null;
+
+  const handleWhatsAppOrder = () => {
+    if (items.length === 0) return;
+
+    let message = `*NEW ORDER - TK STORE*\n`;
+    message += `-----------------------------\n`;
+    items.forEach((item, index) => {
+      message += `*${index + 1}. ${item.name}* (x${item.quantity})\n`;
+      message += `   • Price: $${item.totalPrice * item.quantity}\n`;
+      if (item.configuredSpecs) {
+        if (item.configuredSpecs.processor) message += `   • Spec: ${item.configuredSpecs.processor}\n`;
+        if (item.configuredSpecs.ram) message += `   • Detail: ${item.configuredSpecs.ram}\n`;
       }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isCartOpen, closeCart]);
+      message += `\n`;
+    });
+    message += `-----------------------------\n`;
+    message += `*TOTAL AMOUNT:* $${subtotal.toLocaleString()}\n\n`;
+    message += `Please confirm stock availability and payment instructions.`;
 
-  const handleProceedToCheckout = () => {
-    closeCart();
-    router.push("/checkout");
+    const encoded = encodeURIComponent(message);
+    window.open(`https://wa.me/${WA_ACTUAL_NUMBER}?text=${encoded}`, '_blank', 'noopener,noreferrer');
   };
 
   return (
-    <AnimatePresence>
-      {isCartOpen && (
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="cart-drawer-title"
-          className="fixed inset-0 z-50 flex justify-end"
-        >
-          {/* Smooth Darkened Backdrop with backdrop-blur-md */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={closeCart}
-            className="fixed inset-0 bg-black/75 backdrop-blur-md"
-          />
+    <div className="fixed inset-0 z-50 overflow-hidden">
+      {/* Backdrop */}
+      <div 
+        onClick={closeCart}
+        className="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" 
+      />
 
-          {/* Slide-in Drawer Panel from Right Edge */}
-          <motion.aside
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 28, stiffness: 280 }}
-            className="relative w-full max-w-md bg-[#0a0b12] border-l border-white/[0.08] p-6 flex flex-col h-full z-50 shadow-[-20px_0_70px_rgba(0,0,0,0.85)]"
-          >
-            {/* Top Cyber Cyan Accent Line */}
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-[#00f0ff]/60 to-transparent"
-            />
+      <div className="fixed inset-y-0 right-0 max-w-full flex pl-10">
+        <div className="w-screen max-w-md bg-[#0a0b12] border-l border-white/[0.08] p-6 flex flex-col h-full shadow-2xl">
+          
+          {/* Header */}
+          <div className="flex items-center justify-between pb-5 border-b border-white/[0.08]">
+            <div className="flex items-center gap-2">
+              <ShoppingBag className="w-5 h-5 text-cyan-400" />
+              <h2 className="text-base font-bold text-white tracking-wide">YOUR HARDWARE BAG</h2>
+              <span className="text-xs font-mono text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-full border border-cyan-500/20">
+                {totalItems}
+              </span>
+            </div>
+            <button 
+              onClick={closeCart}
+              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-white/[0.05] transition-colors"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
 
-            {/* Header: "YOUR HARDWARE BAG" + Item Counter + Close Button (X) */}
-            <div className="flex items-center justify-between pb-5 border-b border-[#1f2232]">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0d0e15] border border-[#00f0ff]/40 text-[#00f0ff] shadow-[0_0_20px_-4px_rgba(0,240,255,0.3)]">
-                  <ShoppingBag className="h-4 w-4" />
+          {/* Items List */}
+          <div className="flex-1 overflow-y-auto py-4 space-y-4">
+            {items.length === 0 ? (
+              <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-4">
+                <div className="h-16 w-16 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-slate-500">
+                  <ShoppingBag className="w-8 h-8" />
                 </div>
                 <div>
-                  <div className="flex items-center gap-2">
-                    <h2
-                      id="cart-drawer-title"
-                      className="font-mono text-sm font-extrabold uppercase tracking-[0.18em] text-[#f8fafc]"
-                    >
-                      YOUR HARDWARE BAG
-                    </h2>
-                    <span className="rounded-full bg-[#00f0ff] px-2 py-0.5 font-mono text-[10px] font-bold text-[#050507]">
-                      {totalItems}
-                    </span>
-                  </div>
-                  <p className="font-mono text-[10px] text-[#94a3b8] uppercase tracking-wider">
-                    DIRECT FOUNDRY ALLOCATION
+                  <h3 className="text-sm font-semibold text-white">Your bag is empty</h3>
+                  <p className="text-xs text-slate-400 mt-1 max-w-xs">
+                    Explore our Dell, HP flagship fleet or private reserve perfumes.
                   </p>
                 </div>
-              </div>
-
-              <button
-                type="button"
-                onClick={closeCart}
-                aria-label="Close hardware bag drawer"
-                className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#0d0e15] border border-[#1f2232] text-[#94a3b8] hover:border-[#00f0ff]/50 hover:text-[#00f0ff] transition-colors cursor-pointer"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            </div>
-
-            {/* Confirmation Toast when Item Added */}
-            <AnimatePresence>
-              {lastAddedToast && (
-                <motion.div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  className="mt-4 flex items-center justify-between gap-2 rounded-xl bg-emerald-500/10 border border-emerald-500/35 px-3.5 py-2.5 text-xs text-emerald-300"
-                >
-                  <div className="flex items-center gap-2 min-w-0">
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                    <span className="truncate font-medium">
-                      {lastAddedToast}
-                    </span>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={clearToast}
-                    aria-label="Dismiss notification"
-                    className="text-emerald-300/70 hover:text-emerald-200 shrink-0"
-                  >
-                    <X className="h-3.5 w-3.5" />
-                  </button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Drawer Body: Empty State vs Populated Item List */}
-            {items.length === 0 ? (
-              <div className="flex flex-1 flex-col items-center justify-center text-center py-12 px-4">
-                <div className="relative flex h-20 w-20 items-center justify-center rounded-3xl bg-[#0d0e15] border border-[#1f2232] text-[#94a3b8] shadow-[0_0_35px_-8px_rgba(0,240,255,0.2)] mb-6">
-                  <Cpu className="h-9 w-9 text-[#00f0ff]/80" />
-                </div>
-
-                <span className="font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-[#00f0ff]">
-                  ZERO ALLOCATIONS
-                </span>
-
-                <h3 className="mt-2 text-xl font-bold text-[#f8fafc]">
-                  Your bag is currently empty
-                </h3>
-
-                <p className="mt-2 text-xs sm:text-sm text-[#94a3b8] max-w-xs leading-relaxed">
-                  Configure a flagship Titan AI workstation, Stealth Blade
-                  gaming rig, or Air Carbon ultraportable to begin.
-                </p>
-
-                <Link
-                  href="/catalog"
+                <button
                   onClick={closeCart}
-                  className="mt-7 w-full max-w-xs"
+                  className="px-5 py-2.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.1] text-xs font-semibold text-slate-200 border border-white/10 transition-colors"
                 >
-                  <Button
-                    variant="primary"
-                    size="md"
-                    fullWidth
-                    rightIcon={<ArrowRight className="h-4 w-4" />}
-                  >
-                    Explore TK Fleet
-                  </Button>
-                </Link>
+                  Continue Shopping
+                </button>
               </div>
             ) : (
-              <>
-                <div className="flex-1 overflow-y-auto py-4 space-y-4 pr-1">
-                  {items.map((item) => {
-                    const lineTotal = item.totalPrice * item.quantity;
-                    return (
-                      <div
-                        key={item.id}
-                        className="rounded-2xl bg-[#0d0e15] border border-[#1f2232] p-4 transition-colors hover:border-[#00f0ff]/35"
+              items.map((item) => (
+                <div 
+                  key={item.id} 
+                  className="flex gap-3.5 p-3.5 rounded-2xl bg-white/[0.02] border border-white/[0.06]"
+                >
+                  <div className="relative h-18 w-18 flex-shrink-0 overflow-hidden rounded-xl bg-black border border-white/10">
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2">
+                      <h4 className="text-xs font-bold text-white truncate">{item.name}</h4>
+                      <button
+                        onClick={() => removeItem(item.id)}
+                        className="text-slate-500 hover:text-rose-400 transition-colors"
                       >
-                        <div className="flex gap-3.5">
-                          {/* Thumbnail with Dark Frame and Subtle Cyan Backlight */}
-                          <Link
-                            href={`/catalog/${item.slug}`}
-                            onClick={closeCart}
-                            className="relative h-20 w-24 shrink-0 overflow-hidden rounded-xl bg-[#050507] border border-white/10 shadow-[0_0_18px_-4px_rgba(0,240,255,0.3)]"
-                          >
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              width={120}
-                              height={90}
-                              className="h-full w-full object-cover"
-                            />
-                          </Link>
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
 
-                          {/* Item Details & Custom Spec Summary Pills */}
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between gap-2">
-                              <Link
-                                href={`/catalog/${item.slug}`}
-                                onClick={closeCart}
-                                className="text-sm font-bold text-[#f8fafc] hover:text-[#00f0ff] transition-colors truncate"
-                              >
-                                {item.name}
-                              </Link>
-                              <button
-                                type="button"
-                                onClick={() => removeItem(item.id)}
-                                aria-label={`Remove ${item.name} from bag`}
-                                className="text-[#94a3b8] hover:text-rose-400 transition-colors p-0.5 cursor-pointer shrink-0"
-                              >
-                                <Trash2 className="h-3.5 w-3.5" />
-                              </button>
-                            </div>
+                    <p className="text-[11px] font-mono text-cyan-400 mt-0.5">
+                      ${item.totalPrice.toLocaleString()}
+                    </p>
 
-                            {/* Spec Summary Pills */}
-                            <div className="mt-1.5 flex flex-wrap gap-1">
-                              <span className="rounded-md bg-[#050507] border border-white/10 px-1.5 py-0.5 font-mono text-[10px] text-[#00f0ff]">
-                                {item.configuredSpecs.ram}
-                              </span>
-                              <span className="rounded-md bg-[#050507] border border-white/10 px-1.5 py-0.5 font-mono text-[10px] text-[#f8fafc]">
-                                {item.configuredSpecs.storage}
-                              </span>
-                              <span className="rounded-md bg-[#050507] border border-white/10 px-1.5 py-0.5 font-mono text-[10px] text-[#94a3b8]">
-                                {item.configuredSpecs.display}
-                              </span>
-                              <span className="rounded-md bg-[#050507] border border-white/10 px-1.5 py-0.5 font-mono text-[10px] text-emerald-400">
-                                {item.configuredSpecs.warranty}
-                              </span>
-                            </div>
-
-                            <div className="mt-1 font-mono text-[10px] text-[#94a3b8] truncate">
-                              {item.configuredSpecs.processor}
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Quantity Stepper (- / +) & Item Price */}
-                        <div className="mt-3.5 pt-3 border-t border-white/[0.06] flex items-center justify-between">
-                          <div className="inline-flex items-center rounded-xl bg-[#050507] border border-[#1f2232] p-0.5">
-                            <button
-                              type="button"
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity - 1)
-                              }
-                              aria-label="Decrease quantity"
-                              className="flex h-7 w-7 items-center justify-center rounded-lg text-[#94a3b8] hover:bg-white/10 hover:text-[#f8fafc] transition-colors cursor-pointer"
-                            >
-                              <Minus className="h-3 w-3" />
-                            </button>
-                            <span
-                              aria-live="polite"
-                              className="px-3 font-mono text-xs font-bold text-[#f8fafc]"
-                            >
-                              {item.quantity}
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity + 1)
-                              }
-                              aria-label="Increase quantity"
-                              className="flex h-7 w-7 items-center justify-center rounded-lg text-[#94a3b8] hover:bg-white/10 hover:text-[#f8fafc] transition-colors cursor-pointer"
-                            >
-                              <Plus className="h-3 w-3" />
-                            </button>
-                          </div>
-
-                          <div className="text-right">
-                            <div className="text-sm font-extrabold text-[#f8fafc]">
-                              ${lineTotal.toLocaleString("en-US")}{" "}
-                              <span className="font-mono text-[10px] font-normal text-[#94a3b8]">
-                                USD
-                              </span>
-                            </div>
-                            {item.quantity > 1 && (
-                              <div className="font-mono text-[10px] text-[#94a3b8]">
-                                ${item.totalPrice.toLocaleString("en-US")} each
-                              </div>
-                            )}
-                          </div>
-                        </div>
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="flex items-center gap-2 bg-white/[0.04] border border-white/10 rounded-lg p-1">
+                        <button
+                          onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                          className="p-0.5 text-slate-400 hover:text-white"
+                        >
+                          <Minus className="w-3 h-3" />
+                        </button>
+                        <span className="text-xs font-mono px-1.5 text-white">{item.quantity}</span>
+                        <button
+                          onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                          className="p-0.5 text-slate-400 hover:text-white"
+                        >
+                          <Plus className="w-3 h-3" />
+                        </button>
                       </div>
-                    );
-                  })}
-                </div>
-
-                {/* Summary Footer */}
-                <div className="pt-4 border-t border-[#1f2232] space-y-4">
-                  {/* Complimentary Courier Shipping Indicator */}
-                  <div className="flex items-center justify-between rounded-xl bg-[#050507] border border-emerald-500/25 px-3.5 py-2.5 text-xs">
-                    <span className="inline-flex items-center gap-2 text-emerald-400 font-medium">
-                      <Truck className="h-4 w-4 shrink-0" />
-                      <span>TK Priority Air Courier</span>
-                    </span>
-                    <span className="font-mono text-[11px] font-bold text-emerald-400">
-                      COMPLIMENTARY
-                    </span>
-                  </div>
-
-                  {/* Subtotal Row */}
-                  <div className="flex items-baseline justify-between">
-                    <div>
-                      <span className="font-mono text-xs uppercase tracking-widest text-[#94a3b8]">
-                        ESTIMATED SUBTOTAL
-                      </span>
-                      <p className="text-[11px] text-[#94a3b8]">
-                        Taxes calculated at checkout
-                      </p>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-2xl font-black text-[#f8fafc]">
-                        ${subtotal.toLocaleString("en-US")}
-                      </span>
-                      <span className="ml-1 font-mono text-xs text-[#94a3b8]">
-                        USD
+                      <span className="text-xs font-bold text-white">
+                        ${(item.totalPrice * item.quantity).toLocaleString()}
                       </span>
                     </div>
                   </div>
-
-                  {/* Proceed to Secure Checkout Button */}
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    fullWidth
-                    onClick={handleProceedToCheckout}
-                    rightIcon={<ArrowRight className="h-4 w-4" />}
-                    className="glow-cyan"
-                  >
-                    Proceed to Secure Checkout
-                  </Button>
-
-                  <div className="flex items-center justify-center gap-2 font-mono text-[10px] text-[#94a3b8]">
-                    <ShieldCheck className="h-3.5 w-3.5 text-[#00f0ff]" />
-                    <span>256-Bit Encrypted • 30-Day Zero-Dead-Pixel Guarantee</span>
-                  </div>
                 </div>
-              </>
+              ))
             )}
-          </motion.aside>
+          </div>
+
+          {/* Footer Actions */}
+          {items.length > 0 && (
+            <div className="pt-4 border-t border-white/[0.08] space-y-3">
+              <div className="flex items-center justify-between text-xs">
+                <span className="text-slate-400">Subtotal</span>
+                <span className="text-lg font-bold text-white font-mono">${subtotal.toLocaleString()}</span>
+              </div>
+
+              {/* Direct WhatsApp Order Button */}
+              <button
+                onClick={handleWhatsAppOrder}
+                className="w-full py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-black font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(16,185,129,0.35)]"
+              >
+                <MessageCircle className="w-4 h-4 fill-current" />
+                <span>Instant Order via WhatsApp</span>
+              </button>
+
+              <div className="text-center">
+                <span className="text-[10px] font-mono text-slate-500">
+                  WhatsApp Support Desk: <span className="text-emerald-400 font-semibold">{WA_DISPLAY_NUMBER}</span>
+                </span>
+              </div>
+
+              {/* Web Checkout Link */}
+              <Link
+                href="/checkout"
+                onClick={closeCart}
+                className="w-full py-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-black font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,240,255,0.4)]"
+              >
+                <span>Proceed to Card Checkout</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          )}
+
         </div>
-      )}
-    </AnimatePresence>
+      </div>
+    </div>
   );
 }
 

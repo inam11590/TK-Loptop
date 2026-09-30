@@ -4,9 +4,9 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { LAPTOP_PRODUCTS } from '@/data/products';
-import { Cpu, Eye, HardDrive, ArrowRight, ShieldCheck } from 'lucide-react';
+import { Cpu, Eye, HardDrive, ArrowRight, ShieldCheck, Check } from 'lucide-react';
 
-export default function FeaturedLaptops() {
+export function FeaturedLaptops() {
   const [selectedBrand, setSelectedBrand] = useState<'All' | 'Dell' | 'HP'>('All');
 
   const filteredLaptops = selectedBrand === 'All' 
@@ -14,118 +14,128 @@ export default function FeaturedLaptops() {
     : LAPTOP_PRODUCTS.filter(l => l.brand === selectedBrand);
 
   return (
-    <section id="laptops" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#050507]">
+    <section id="laptops" className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
       <div className="mx-auto max-w-7xl">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4 pb-4 border-b border-gray-200">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono tracking-wider uppercase mb-3">
-              <ShieldCheck className="w-3.5 h-3.5" />
-              <span>Authorized Flagship Hardware</span>
+            <div className="flex items-center gap-2 text-orange-600 text-xs font-bold uppercase tracking-wider mb-1">
+              <ShieldCheck className="w-4 h-4" />
+              <span>Certified Tier-1 Computing Fleet</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
-              Dell & HP Performance Fleet
+            <h2 className="text-2xl sm:text-3xl font-black text-gray-900 tracking-tight">
+              Dell & HP High-Performance Machines
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-xl">
-              Precision-curated Dell XPS, Alienware, HP Spectre, and OMEN flagship workstations with verified warranty and express courier dispatch.
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">
+              Precision-curated hardware with official service tags, on-site warranty, and zero-dead-pixel inspection.
             </p>
           </div>
 
-          {/* Brand Filter Tabs */}
-          <div className="flex items-center gap-2 bg-white/[0.03] p-1.5 rounded-xl border border-white/[0.08] self-start md:self-auto">
+          {/* Filter Tabs (Alibaba Tab Style) */}
+          <div className="flex items-center gap-1.5 bg-gray-200/80 p-1 rounded-xl">
             {(['All', 'Dell', 'HP'] as const).map((brand) => (
               <button
                 key={brand}
                 onClick={() => setSelectedBrand(brand)}
-                className={`px-5 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
+                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
                   selectedBrand === brand
-                    ? 'bg-cyan-400 text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]'
-                    : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
+                    ? 'bg-white text-orange-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                {brand === 'All' ? 'All Hardware' : `${brand} Machines`}
+                {brand === 'All' ? 'All Hardware' : `${brand} Only`}
               </button>
             ))}
           </div>
         </div>
 
         {/* Laptops Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
           {filteredLaptops.map((laptop) => (
             <div
               key={laptop.id}
-              className="group relative flex flex-col rounded-3xl bg-[#0b0c13] border border-white/[0.08] hover:border-cyan-400/40 transition-all duration-500 p-6 hover:shadow-[0_0_30px_-5px_rgba(0,240,255,0.2)]"
+              className="group relative flex flex-col rounded-2xl bg-white border border-gray-200 hover:border-orange-500 hover:shadow-lg transition-all duration-300 p-6"
             >
-              {/* Card Header */}
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-xs font-mono font-semibold tracking-wider px-3 py-1 rounded-full bg-white/[0.05] text-cyan-300 border border-white/10">
-                  {laptop.brand.toUpperCase()} // {laptop.series}
+              {/* Card Top Label */}
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-[11px] font-bold text-gray-700 bg-gray-100 px-2.5 py-1 rounded-md border border-gray-200 uppercase tracking-wide">
+                  {laptop.brand} // {laptop.series}
                 </span>
                 {laptop.badge && (
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-black bg-cyan-400 px-2.5 py-0.5 rounded-full">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-white bg-orange-600 px-2 py-0.5 rounded">
                     {laptop.badge}
                   </span>
                 )}
               </div>
 
-              {/* Laptop Image */}
-              <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-[#07080d] mb-6">
+              {/* Laptop Photo */}
+              <div className="relative h-60 w-full overflow-hidden rounded-xl bg-gray-50 mb-4 border border-gray-100">
                 <Image
                   src={laptop.images[0]}
                   alt={laptop.name}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
-                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0b0c13] via-transparent to-transparent opacity-60" />
               </div>
 
               {/* Title & Tagline */}
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+              <div className="mb-4">
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-orange-600 transition-colors">
                   {laptop.name}
                 </h3>
-                <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-gray-500 mt-1 line-clamp-2 leading-relaxed">
                   {laptop.tagline}
                 </p>
               </div>
 
               {/* Spec HUD Grid */}
-              <div className="grid grid-cols-2 gap-3 mb-6 font-mono text-xs">
-                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                  <Cpu className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                  <span className="text-slate-300 truncate">{laptop.specs.processor.split('(')[0]}</span>
+              <div className="grid grid-cols-2 gap-2 mb-5 text-xs">
+                <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 border border-gray-100">
+                  <Cpu className="w-3.5 h-3.5 text-orange-600 flex-shrink-0" />
+                  <span className="text-gray-700 truncate font-medium">{laptop.specs.processor.split('(')[0]}</span>
                 </div>
-                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                  <Eye className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                  <span className="text-slate-300 truncate">{laptop.specs.graphics.split(' ')[0]} {laptop.specs.graphics.split(' ')[1]}</span>
+                <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 border border-gray-100">
+                  <Eye className="w-3.5 h-3.5 text-orange-600 flex-shrink-0" />
+                  <span className="text-gray-700 truncate font-medium">{laptop.specs.graphics.split(' ')[0]} {laptop.specs.graphics.split(' ')[1]}</span>
                 </div>
-                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                  <HardDrive className="w-4 h-4 text-cyan-400 flex-shrink-0" />
-                  <span className="text-slate-300 truncate">{laptop.specs.memory.split(' ')[0]} RAM</span>
+                <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 border border-gray-100">
+                  <HardDrive className="w-3.5 h-3.5 text-orange-600 flex-shrink-0" />
+                  <span className="text-gray-700 truncate font-medium">{laptop.specs.memory.split(' ')[0]} RAM</span>
                 </div>
-                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
-                  <span className="text-cyan-400 font-bold ml-1">SSD</span>
-                  <span className="text-slate-300 truncate">{laptop.specs.storage.split(' ')[0]} Gen4</span>
+                <div className="flex items-center gap-2 p-2 rounded-lg bg-gray-50 border border-gray-100">
+                  <span className="text-orange-600 font-bold text-[11px] ml-0.5">SSD</span>
+                  <span className="text-gray-700 truncate font-medium">{laptop.specs.storage.split(' ')[0]} Gen4</span>
                 </div>
               </div>
 
-              {/* Price & Action */}
-              <div className="mt-auto flex items-center justify-between pt-5 border-t border-white/[0.08]">
+              {/* Key Features List */}
+              <div className="space-y-1 mb-5 text-[11px] text-gray-600">
+                {laptop.keyFeatures.slice(0, 2).map((feat, idx) => (
+                  <div key={idx} className="flex items-center gap-1.5">
+                    <Check className="w-3.5 h-3.5 text-emerald-600 flex-shrink-0" />
+                    <span className="truncate">{feat}</span>
+                  </div>
+                ))}
+              </div>
+
+              {/* Price & Commercial Action */}
+              <div className="mt-auto flex items-center justify-between pt-4 border-t border-gray-100">
                 <div>
-                  <span className="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Starting From</span>
-                  <span className="text-2xl font-extrabold text-white">${laptop.basePrice.toLocaleString()}</span>
+                  <span className="text-[10px] uppercase font-bold text-gray-400 block">Unit Price (FOB)</span>
+                  <span className="text-2xl font-black text-orange-600">${laptop.basePrice.toLocaleString()}</span>
                 </div>
 
                 <Link
                   href={`/catalog/${laptop.slug}`}
-                  className="flex items-center gap-2 px-5 py-3 rounded-xl bg-cyan-400 text-black font-semibold text-xs hover:bg-cyan-300 hover:shadow-[0_0_20px_-3px_rgba(0,240,255,0.6)] transition-all duration-300"
+                  className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-bold text-xs shadow-sm hover:shadow transition-all"
                 >
-                  <span>Configure & Buy</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>Configure & Order</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
+
             </div>
           ))}
         </div>
@@ -134,3 +144,5 @@ export default function FeaturedLaptops() {
     </section>
   );
 }
+
+export default FeaturedLaptops;

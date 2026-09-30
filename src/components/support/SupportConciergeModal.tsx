@@ -22,7 +22,7 @@ import {
 type TabType = 'whatsapp' | 'warranty' | 'inquiry' | 'contact';
 
 // Configure your business WhatsApp number (international format without '+' or '-' or spaces)
-const WHATSAPP_PHONE_NUMBER = '18005558584'; // Replace with your target WhatsApp business number
+const WHATSAPP_PHONE_NUMBER = '923159255165';
 
 const WHATSAPP_PRESETS = [
   {
@@ -466,14 +466,14 @@ export default function SupportConciergeModal() {
                       </div>
                       <div>
                         <span className="text-[10px] font-mono uppercase text-slate-400 block">WhatsApp VIP Desk</span>
-                        <span className="text-sm font-bold text-white">Instant Response Active</span>
+                        <span className="text-sm font-bold text-white">0300-0000000</span>
                       </div>
                     </div>
                     <button
                       onClick={() => setActiveTab('whatsapp')}
                       className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-emerald-400 text-black hover:bg-emerald-300 transition-colors"
                     >
-                      Open Chat
+                      Chat Now
                     </button>
                   </div>
 
@@ -484,11 +484,11 @@ export default function SupportConciergeModal() {
                       </div>
                       <div>
                         <span className="text-[10px] font-mono uppercase text-slate-400 block">Direct Priority Line</span>
-                        <span className="text-sm font-bold text-white">+1 (800) 555-TK-VIP</span>
+                        <span className="text-sm font-bold text-white">0300-0000000</span>
                       </div>
                     </div>
                     <span className="text-[10px] font-mono bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5 rounded-full">
-                      24/7 Priority
+                      24/7 Active
                     </span>
                   </div>
 

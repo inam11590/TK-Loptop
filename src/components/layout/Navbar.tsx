@@ -3,14 +3,13 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ShoppingBag, Menu, X, Sparkles, Laptop, ChevronRight } from 'lucide-react';
+import { ShoppingBag, Menu, X, Sparkles, Laptop, ChevronRight, MessageCircle } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 
-export default function Navbar() {
+export function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   
-  // Safely retrieve cart context
   let totalItems = 0;
   let openCart = () => {};
   try {
@@ -18,34 +17,53 @@ export default function Navbar() {
     totalItems = cart.totalItems;
     openCart = cart.openCart;
   } catch (e) {
-    // Graceful fallback if cart context is mounting
+    // Cart mounting fallback
   }
 
   const navLinks = [
     { name: 'Dell Laptops', href: '/catalog?brand=Dell', badge: 'XPS & Alienware' },
     { name: 'HP Laptops', href: '/catalog?brand=HP', badge: 'Spectre & Omen' },
-    { name: 'All Laptops', href: '/catalog' },
+    { name: 'All Hardware', href: '/catalog' },
     { name: 'TK Perfumes', href: '/#perfumes', highlight: true }
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/[0.08] bg-[#050507]/85 backdrop-blur-xl">
-      <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white/95 backdrop-blur-md shadow-sm">
+      
+      {/* Top Utility Bar (Alibaba Style) */}
+      <div className="bg-gray-100 border-b border-gray-200 text-[11px] text-gray-600 px-4 sm:px-6 lg:px-8 py-1.5 flex justify-between items-center">
+        <span>Verified Supplier • Authorized Dell & HP Flagships • 100% Genuine Perfumes</span>
+        <div className="flex items-center gap-4">
+          <span className="flex items-center gap-1 text-emerald-700 font-semibold">
+            <MessageCircle className="w-3.5 h-3.5" /> WhatsApp: 0300-0000000
+          </span>
+          <span className="hidden sm:inline text-gray-400">|</span>
+          <span className="hidden sm:inline">White-Glove Courier Dispatch</span>
+        </div>
+      </div>
+
+      {/* Main Navigation Bar */}
+      <div className="mx-auto flex h-18 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8 py-3">
         
-        {/* Brand Monogram & Name */}
+        {/* Brand Logo */}
         <Link href="/" className="flex items-center gap-3 group">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/20 via-blue-600/10 to-transparent border border-cyan-400/40 group-hover:border-cyan-400 group-hover:shadow-[0_0_20px_-3px_rgba(0,240,255,0.4)] transition-all duration-300">
-            <span className="font-mono text-base font-extrabold tracking-tighter text-cyan-400">TK</span>
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-orange-500 text-white font-black text-xl shadow-md">
+            TK
           </div>
           <div className="flex flex-col">
-            <span className="text-lg font-bold tracking-wider text-slate-100 group-hover:text-cyan-300 transition-colors">
-              TK <span className="text-xs font-mono font-normal tracking-widest text-cyan-400/80">PREMIUM</span>
-            </span>
-            <span className="text-[10px] tracking-widest text-slate-400 uppercase">Hardware & Perfumes</span>
+            <div className="flex items-center gap-1.5">
+              <span className="text-xl font-extrabold tracking-tight text-gray-900 group-hover:text-orange-600 transition-colors">
+                TK STORE
+              </span>
+              <span className="text-[10px] bg-orange-100 text-orange-700 font-bold px-1.5 py-0.5 rounded">
+                PRO
+              </span>
+            </div>
+            <span className="text-[11px] font-medium text-gray-500">Laptops & Haute Parfumerie</span>
           </div>
         </Link>
 
-        {/* Desktop Navigation Links */}
+        {/* Desktop Links */}
         <nav className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -54,9 +72,9 @@ export default function Navbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wider text-amber-300 bg-amber-500/10 border border-amber-500/30 hover:border-amber-400 hover:bg-amber-500/20 transition-all duration-200 shadow-[0_0_15px_-4px_rgba(245,158,11,0.3)]"
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold text-amber-900 bg-amber-100 border border-amber-300 hover:bg-amber-200 transition-all shadow-sm"
                 >
-                  <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+                  <Sparkles className="w-3.5 h-3.5 text-amber-700" />
                   <span>{link.name}</span>
                 </Link>
               );
@@ -66,8 +84,8 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-sm font-medium transition-colors hover:text-cyan-400 ${
-                  isActive ? 'text-cyan-400' : 'text-slate-300'
+                className={`text-sm font-semibold transition-colors hover:text-orange-600 ${
+                  isActive ? 'text-orange-600' : 'text-gray-700'
                 }`}
               >
                 {link.name}
@@ -76,72 +94,57 @@ export default function Navbar() {
           })}
         </nav>
 
-        {/* Desktop Actions & Cart Drawer Trigger */}
-        <div className="flex items-center gap-4">
+        {/* Actions & Cart */}
+        <div className="flex items-center gap-3">
           <button
             onClick={openCart}
             aria-label="Open Shopping Bag"
-            className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] hover:border-cyan-400/50 hover:bg-cyan-950/20 text-slate-200 hover:text-cyan-300 transition-all duration-200"
+            className="relative flex items-center gap-2 h-11 px-4 rounded-xl bg-gray-100 hover:bg-gray-200 border border-gray-200 text-gray-800 transition-all duration-200"
           >
-            <ShoppingBag className="w-5 h-5" />
+            <ShoppingBag className="w-5 h-5 text-gray-700" />
+            <span className="text-xs font-bold hidden sm:inline">Bag</span>
             {totalItems > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-cyan-400 text-[11px] font-bold text-black shadow-[0_0_10px_rgba(0,240,255,0.6)] animate-pulse">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-[11px] font-bold text-white shadow-sm">
                 {totalItems}
               </span>
             )}
           </button>
 
-          {/* Mobile Hamburger Trigger */}
+          {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="flex md:hidden h-11 w-11 items-center justify-center rounded-xl bg-white/[0.04] border border-white/[0.08] text-slate-300"
-            aria-label="Toggle Navigation Menu"
+            className="flex md:hidden h-11 w-11 items-center justify-center rounded-xl bg-gray-100 border border-gray-200 text-gray-700"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Drawer Menu */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-white/[0.08] bg-[#090a10]/95 backdrop-blur-2xl px-6 py-6 space-y-4">
-          <div className="space-y-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] text-slate-200 hover:text-cyan-400 hover:border-cyan-400/40 transition-all"
-              >
-                <div className="flex items-center gap-3">
-                  {link.highlight ? (
-                    <Sparkles className="w-4 h-4 text-amber-400" />
-                  ) : (
-                    <Laptop className="w-4 h-4 text-cyan-400" />
-                  )}
-                  <span className="text-sm font-semibold">{link.name}</span>
-                </div>
-                <ChevronRight className="w-4 h-4 text-slate-500" />
-              </Link>
-            ))}
-          </div>
-
-          <div className="pt-2">
-            <button
-              onClick={() => {
-                setMobileMenuOpen(false);
-                openCart();
-              }}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-black font-semibold text-sm shadow-[0_0_20px_-3px_rgba(0,240,255,0.4)]"
+        <div className="md:hidden border-t border-gray-200 bg-white px-5 py-4 space-y-3 shadow-lg">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center justify-between p-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-800 hover:bg-orange-50 hover:text-orange-600 transition-colors"
             >
-              <ShoppingBag className="w-4 h-4" />
-              <span>View Shopping Bag ({totalItems})</span>
-            </button>
-          </div>
+              <div className="flex items-center gap-2.5">
+                {link.highlight ? (
+                  <Sparkles className="w-4 h-4 text-amber-600" />
+                ) : (
+                  <Laptop className="w-4 h-4 text-gray-600" />
+                )}
+                <span className="text-sm font-semibold">{link.name}</span>
+              </div>
+              <ChevronRight className="w-4 h-4 text-gray-400" />
+            </Link>
+          ))}
         </div>
       )}
     </header>
   );
 }
 
-export { Navbar };
+export default Navbar;
