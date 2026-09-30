@@ -1,56 +1,57 @@
 'use client';
 
 import React from 'react';
-import { Sparkles, ShieldCheck, Droplet } from 'lucide-react';
 import { getAllPerfumes } from '@/data/perfumes';
 import PerfumeCard from './PerfumeCard';
+import { Sparkles, ShieldCheck, Droplet, Clock } from 'lucide-react';
 
-export function PerfumeShowcase() {
+export default function PerfumeShowcase() {
   const perfumes = getAllPerfumes();
 
   return (
-    <section id="perfumes" className="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white via-amber-50/30 to-white border-t border-gray-200">
+    <section id="perfumes" className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8 bg-white border-b border-gray-200">
       <div className="mx-auto max-w-7xl">
         
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-100 border border-amber-200 text-amber-800 text-xs font-bold uppercase tracking-wider mb-3">
-            <Sparkles className="w-3.5 h-3.5 text-amber-700" />
-            <span>TK Haute Parfumerie // Private Reserve</span>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8 pb-4 border-b border-gray-200">
+          <div>
+            <div className="inline-flex items-center gap-1.5 text-amber-700 text-xs font-bold uppercase tracking-wider mb-1">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>TK Haute Parfumerie // Private Reserve</span>
+            </div>
+            <h2 className="text-2xl font-black text-gray-900 tracking-tight">
+              Artisan Fragrance Collection
+            </h2>
+            <p className="text-xs text-gray-500 mt-0.5">
+              High-concentration extraits and eau de parfums crafted with natural oils and aged agarwood.
+            </p>
           </div>
-          
-          <h2 className="text-2xl sm:text-4xl font-black text-gray-900 tracking-tight">
-            Artisan Scent Formulations
-          </h2>
-          
-          <p className="text-gray-600 text-xs sm:text-sm mt-2 leading-relaxed">
-            Crafted with natural aged agarwood, French lavender, and concentrated perfume oils. Designed for all-day 18+ hour sillage.
-          </p>
+
+          <div className="text-xs text-gray-500 font-semibold self-start sm:self-auto">
+            100ml / 3.4 fl. oz. Bottles • Tamper-Sealed Packaging
+          </div>
         </div>
 
-        {/* Perfume Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* 3 Perfumes Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {perfumes.map((perfume) => (
             <PerfumeCard key={perfume.id} perfume={perfume} />
           ))}
         </div>
 
-        {/* Assurance Bar */}
-        <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-4 rounded-xl bg-white border border-amber-200 p-5 text-center shadow-sm">
-          <div className="flex flex-col items-center gap-1.5">
-            <Droplet className="w-5 h-5 text-amber-600" />
-            <span className="text-xs font-bold text-gray-900">Extrait Concentration</span>
-            <span className="text-[11px] text-gray-500">Up to 30% oil concentration for high projection</span>
+        {/* Clean 3-Item Assurance Strip */}
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-gray-100 text-xs text-gray-600">
+          <div className="flex items-center gap-2.5">
+            <Droplet className="w-4 h-4 text-amber-600 flex-shrink-0" />
+            <span><strong>High Oil Ratio:</strong> Up to 30% concentration for 18+ hour sillage.</span>
           </div>
-          <div className="flex flex-col items-center gap-1.5 border-y sm:border-y-0 sm:border-x border-gray-200 py-3 sm:py-0">
-            <Sparkles className="w-5 h-5 text-amber-600" />
-            <span className="text-xs font-bold text-gray-900">100% Rare Natural Sourcing</span>
-            <span className="text-[11px] text-gray-500">Cambodian Agarwood, Bourbon Vanilla & Vetiver</span>
+          <div className="flex items-center gap-2.5">
+            <ShieldCheck className="w-4 h-4 text-amber-600 flex-shrink-0" />
+            <span><strong>100% Genuine Extracts:</strong> Certified Cambodian Oud & French Lavender.</span>
           </div>
-          <div className="flex flex-col items-center gap-1.5">
-            <ShieldCheck className="w-5 h-5 text-amber-600" />
-            <span className="text-xs font-bold text-gray-900">Verified Flacon Batch</span>
-            <span className="text-[11px] text-gray-500">Shipped in temperature-controlled packaging</span>
+          <div className="flex items-center gap-2.5">
+            <Clock className="w-4 h-4 text-amber-600 flex-shrink-0" />
+            <span><strong>Dispatched in 24h:</strong> Shock-resistant courier packaging.</span>
           </div>
         </div>
 
@@ -59,4 +60,4 @@ export function PerfumeShowcase() {
   );
 }
 
-export default PerfumeShowcase;
+export { PerfumeShowcase };
