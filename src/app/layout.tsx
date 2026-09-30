@@ -4,6 +4,7 @@ import { CartProvider } from "@/context/CartContext";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { CartDrawer } from "@/components/cart/CartDrawer";
+import SupportConciergeModal from "@/components/support/SupportConciergeModal";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -86,6 +87,7 @@ export default function RootLayout({
             <div className="flex-1 flex flex-col">{children}</div>
             <Footer />
             <CartDrawer />
+            <SupportConciergeModal />
           </div>
         </CartProvider>
       </body>
