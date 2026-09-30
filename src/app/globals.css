@@ -1,26 +1,111 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #050507;
+  --foreground: #f8fafc;
+  --surface: #0d0e15;
+  --surface-border: #1f2232;
+  --text-primary: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-cyan: #00f0ff;
+  --accent-cobalt: #3b82f6;
+  --scrollbar-thumb: #1f2232;
+  --scrollbar-thumb-hover: #334155;
+  --scrollbar-track: #050507;
+  color-scheme: dark;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-canvas: #050507;
+  --color-surface: #0d0e15;
+  --color-surface-border: #1f2232;
+  --color-titanium: #f8fafc;
+  --color-slate-muted: #94a3b8;
+  --color-cyber-cyan: #00f0ff;
+  --color-cobalt: #3b82f6;
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: smooth;
+  background-color: #050507;
+  color: #f8fafc;
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+/* Legacy fallback for WebKit/Blink browsers that do not support standard scrollbar-color */
+@supports not (scrollbar-color: auto) {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 9999px;
+    border: 2px solid var(--scrollbar-track);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #050507;
+  color: #f8fafc;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  selection-background-color: rgba(0, 240, 255, 0.2);
 }
+
+::selection {
+  background-color: rgba(0, 240, 255, 0.2);
+  color: #00f0ff;
+}
+
+/* Luxury Stealth Titanium & Cyber Cyan Utilities */
+.glow-cyan {
+  box-shadow: 0 0 25px -5px rgba(0, 240, 255, 0.25);
+}
+
+.glow-cyan-lg {
+  box-shadow: 0 0 40px -5px rgba(0, 240, 255, 0.4);
+}
+
+.glow-cobalt {
+  box-shadow: 0 0 25px -5px rgba(59, 130, 246, 0.3);
+}
+
+.glass-panel {
+  background: rgba(13, 14, 21, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.surface-card {
+  background-color: #0d0e15;
+  border: 1px solid #1f2232;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #f8fafc 0%, #00f0ff 55%, #3b82f6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.deferred-section {
+  content-visibility: auto;
+  contain-intrinsic-size: auto none auto 700px;
+}
+
