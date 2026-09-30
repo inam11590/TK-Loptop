@@ -1,353 +1,278 @@
-import type { LaptopProduct } from "@/types/product";
+import { LaptopProduct } from '@/types/product';
 
-export const TK_LAPTOPS: LaptopProduct[] = [
+export const LAPTOP_PRODUCTS: LaptopProduct[] = [
   {
-    id: "tk-titan-x16-apex",
-    slug: "tk-titan-x16-apex",
-    name: "TK Titan X16 Apex",
-    category: "AI & Workstation",
-    series: "Titan AI",
-    tagline: "The flagship AI & developer workstation forged in Grade-5 Titanium.",
-    description:
-      "Engineered for local LLM training, multi-container orchestration, and real-time neural rendering. Featuring liquid-metal Cryo-Chamber cooling and 1.2 TB/s unified memory bandwidth.",
-    basePrice: 2899,
-    monthlyFinancingPrice: 119,
-    rating: 4.95,
-    reviewsCount: 342,
-    inStock: true,
-    badges: ["Flagship Release", "Liquid Metal Cryo", "New Gen 3"],
-    featuredImage:
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1400&q=85",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1600&q=85",
-      "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=1600&q=85",
-      "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1600&q=85",
-    ],
-    specs: {
-      cpu: "TK Neural M4 Extreme 24-Core",
-      gpu: "TK Neural Tensor 40-Core (32GB)",
-      ram: "64GB Unified LPDDR5X-8533MHz",
-      storage: "2TB PCIe Gen5 NVMe (14,200 MB/s)",
-      display: "16.0\" 3.8K ProXDR OLED (240Hz, 1600 nits, Nano-Matte)",
-      battery: "99.9Whr — Up to 22h battery life",
-      weight: "1.42 kg (3.13 lbs)",
-      ports: [
-        "3x Thunderbolt 5 (120Gbps)",
-        "1x HDMI 2.1b (8K 60Hz)",
-        "SD Express 8.0 UHS-III",
-        "3.5mm Reference DAC Audio",
-        "MagCharge 280W",
-      ],
-      cpuClock: "24-Core (18P + 6E) @ up to 5.4 GHz Boost",
-      gpuVramAndCores: "40-Core Neural Tensor // 32GB Unified VRAM Allocation",
-      memoryBandwidth: "960 GB/s Sustained (Up to 128GB CTO)",
-      displayPeakNits: "3840 × 2400 • 240Hz • 1,600 nits Peak HDR",
-      coolingTech: "Cryo-Chamber Liquid-Metal Vapor Architecture",
-      dimensions: "354.8 × 246.2 × 15.8 mm (1.42 kg)",
-      rapidCharge: "280W GaN MagCharge (0–80% in 26 min)",
-      displayInches: 16.0,
-      performanceIndex: 97,
-    },
-    filterMeta: {
-      seriesGroup: "Titan Series (AI/Studio)",
-      displaySizeGroup: "16-inch",
-      memoryGroup: "64GB LPDDR5X",
-      gpuTierGroup: "TK Neural GPU Core",
-    },
-    benchmarkScore: {
-      name: "Geekbench 6 Multi / MLPerf Inference",
-      score: "28,940 pts // 240 TOPS",
-    },
-  },
-  {
-    id: "tk-titan-studio-18",
-    slug: "tk-titan-studio-18",
-    name: "TK Titan Studio 18",
-    category: "AI & Workstation",
-    series: "Pro Studio",
-    tagline: "The dual-screen 3D simulation & 8K RAW rendering powerhouse.",
-    description:
-      "Built for VFX supervisors, Unreal Engine 5 world builders, and foundational model researchers demanding desktop-class sustained 260W thermal headroom in a transportable chassis.",
-    basePrice: 3499,
-    monthlyFinancingPrice: 145,
-    rating: 4.98,
-    reviewsCount: 198,
-    inStock: true,
-    badges: ["Extreme Workstation", "128GB Unified Ready", "Dual ProXDR"],
-    featuredImage:
-      "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=1400&q=85",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=1600&q=85",
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1600&q=85",
-      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=1600&q=85",
-    ],
-    specs: {
-      cpu: "TK Neural M4 Ultra 32-Core",
-      gpu: "GeForce RTX 5090 Mobile 24GB GDDR7",
-      ram: "128GB Unified LPDDR5X-9600MHz",
-      storage: "4TB Dual-RAID0 PCIe Gen5 NVMe (14,800 MB/s)",
-      display: "18.0\" 4K+ Mini-LED ProXDR (240Hz, 2000 nits, Calibrated)",
-      battery: "99.9Whr — Up to 18h studio workflow",
-      weight: "2.18 kg (4.80 lbs)",
-      ports: [
-        "4x Thunderbolt 5 (120Gbps)",
-        "1x 10GbE RJ-45 Ethernet",
-        "1x HDMI 2.1b",
-        "CFexpress Type B + SD 8.0",
-        "3.5mm Studio Impedance Jack",
-      ],
-      cpuClock: "32-Core (24P + 8E) @ up to 5.7 GHz Boost",
-      gpuVramAndCores: "10,752 CUDA Cores // 24GB GDDR7 (195W TGP)",
-      memoryBandwidth: "1.2 TB/s Quad-Channel Unified (128GB Max)",
-      displayPeakNits: "4096 × 2560 • 240Hz • 2,000 nits Peak HDR",
-      coolingTech: "Cryo-Chamber Tri-Fan Liquid-Metal + Active Intake",
-      dimensions: "398.4 × 274.0 × 18.4 mm (2.18 kg)",
-      rapidCharge: "330W GaN Dual-Rail Rapid Charge (0–80% in 24 min)",
-      displayInches: 18.0,
-      performanceIndex: 100,
-    },
-    filterMeta: {
-      seriesGroup: "Titan Series (AI/Studio)",
-      displaySizeGroup: "18-inch",
-      memoryGroup: "128GB Extreme",
-      gpuTierGroup: "NVIDIA RTX 50-Series",
-    },
-    benchmarkScore: {
-      name: "Cinebench 2026 / OctaneBench RTX",
-      score: "44,120 pts // 1,480 OB",
-    },
-  },
-  {
-    id: "tk-stealth-blade-16",
-    slug: "tk-stealth-blade-16",
-    name: "TK Stealth Blade 16",
-    category: "Gaming Blade",
-    series: "Stealth Blade",
-    tagline: "Ultra-thin 240Hz OLED gaming & full path-tracing beast.",
-    description:
-      "CNC-milled from a single block of anodized obsidian aluminum at just 14.9mm thin. Delivers desktop-grade frame rates with per-key optical-mechanical switches and zero thermal throttling.",
+    id: 'dell-xps-16-9640',
+    slug: 'dell-xps-16',
+    name: 'Dell XPS 16 (9640)',
+    brand: 'Dell',
+    series: 'XPS',
+    categoryLabel: 'Creator & Studio Flagship',
+    category: 'Creator & Studio Flagship',
+    tagline: 'Precision-crafted CNC aluminum chassis with 4K OLED InfinityEdge touch display.',
+    description: 'Precision-crafted CNC aluminum chassis with 4K OLED InfinityEdge touch display. Designed for top-tier creators, developers, and visual professionals.',
     basePrice: 2499,
-    monthlyFinancingPrice: 99,
+    monthlyFinancingPrice: 104,
+    rating: 4.95,
+    reviewsCount: 184,
+    badge: 'Flagship',
+    badges: ['Flagship', '4K OLED', 'Intel Core Ultra 9'],
+    images: [
+      'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=1200&q=80'
+    ],
+    featuredImage: 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=1200&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=1200&q=80'
+    ],
+    inStock: true,
+    specs: {
+      processor: 'Intel Core Ultra 9 185H (16-Core, 5.1GHz)',
+      graphics: 'NVIDIA GeForce RTX 4070 8GB GDDR6',
+      memory: '32GB LPDDR5X 7467MHz Dual Channel',
+      storage: '1TB M.2 PCIe Gen4 NVMe SSD',
+      display: '16.3" 4K+ (3840 x 2400) OLED Touch 120Hz',
+      battery: '99.5Wh with 130W Type-C Rapid Charge',
+      weight: '2.13 kg / 4.70 lbs',
+      chassis: 'CNC Milled Aluminum with Glass Palmrest',
+      cpu: 'Intel Core Ultra 9 185H (16-Core, 5.1GHz)',
+      gpu: 'NVIDIA GeForce RTX 4070 8GB GDDR6',
+      ram: '32GB LPDDR5X 7467MHz Dual Channel',
+      ports: ['3x Thunderbolt 4 Type-C', '1x microSDXC Card Reader v6.0', '1x 3.5mm Headphone/Mic Combo'],
+      cpuClock: '16-Core (6P + 8E + 2LPE) up to 5.1 GHz Turbo',
+      gpuVramAndCores: '8GB GDDR6 VRAM Dedicated',
+      memoryBandwidth: '7467 MT/s LPDDR5X High Speed',
+      displayPeakNits: '400 nits (500 nits HDR Peak)',
+      coolingTech: 'Dual Opposing Fan Vapor Chamber',
+      dimensions: '358.18 x 240.05 x 18.70 mm',
+      rapidCharge: 'ExpressCharge 80% in 60 min',
+      displayInches: 16.3,
+      performanceIndex: 98
+    },
+    filterMeta: {
+      seriesGroup: 'Titan Series (AI/Studio)',
+      displaySizeGroup: '16-inch',
+      memoryGroup: '32GB Unified',
+      gpuTierGroup: 'NVIDIA RTX 50-Series'
+    },
+    benchmarkScore: {
+      name: 'Geekbench 6 Multi-Core',
+      score: '14,850 pts'
+    },
+    keyFeatures: [
+      'Capacitive Touch Function Row',
+      'Seamless Glass Haptic Trackpad',
+      'Quad-Speaker Spatial Audio with Waves MaxxAudio'
+    ]
+  },
+  {
+    id: 'dell-alienware-m16-r2',
+    slug: 'alienware-m16-r2',
+    name: 'Dell Alienware m16 R2',
+    brand: 'Dell',
+    series: 'Alienware',
+    categoryLabel: 'Competitive High-FPS Gaming',
+    category: 'Competitive High-FPS Gaming',
+    tagline: 'Stealth-mode mechanical performance engineered with Cryo-tech cooling.',
+    description: 'Stealth-mode mechanical performance engineered with Cryo-tech cooling and 240Hz QHD+ ultra-fast display for esports mastery.',
+    basePrice: 2099,
+    monthlyFinancingPrice: 88,
     rating: 4.92,
-    reviewsCount: 476,
-    inStock: true,
-    badges: ["Best Seller", "Liquid Metal Cryo", "0.1ms OLED"],
-    featuredImage:
-      "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1400&q=85",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1600&q=85",
-      "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1600&q=85",
+    reviewsCount: 156,
+    badge: 'Best Seller',
+    badges: ['Best Seller', '240Hz QHD+', 'Cryo-Tech'],
+    images: [
+      'https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=1200&q=80'
     ],
+    featuredImage: 'https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1200&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=1200&q=80'
+    ],
+    inStock: true,
     specs: {
-      cpu: "Intel Core Ultra 9 295HX 24-Core",
-      gpu: "GeForce RTX 5080 Mobile 16GB (175W TGP)",
-      ram: "64GB LPDDR5X-8000MHz XMP",
-      storage: "2TB PCIe Gen5 NVMe (14,000 MB/s)",
-      display: "16.0\" QHD+ 240Hz Tandem OLED (0.1ms, G-SYNC Ultimate)",
-      battery: "95.2Whr — Up to 15h hybrid mode",
-      weight: "1.78 kg (3.92 lbs)",
-      ports: [
-        "2x Thunderbolt 5",
-        "2x USB-A 3.2 Gen 2 (10Gbps)",
-        "1x HDMI 2.1 Full-Bandwidth",
-        "UHS-II MicroSD Slot",
-        "3.5mm THX Spatial Audio",
-      ],
-      cpuClock: "24-Core (8P + 16E) @ up to 5.6 GHz Thermal Velocity",
-      gpuVramAndCores: "8,960 CUDA Cores // 16GB GDDR7 (175W Dynamic Boost)",
-      memoryBandwidth: "680 GB/s Dual-Channel (Up to 96GB)",
-      displayPeakNits: "2560 × 1600 • 240Hz (0.1ms) • 1,200 nits HDR",
-      coolingTech: "Cryo-Chamber Vacuum Vapor Plate + 0.05mm Fins",
-      dimensions: "355.0 × 244.0 × 14.9 mm (1.78 kg)",
-      rapidCharge: "240W Slim GaN Power Brick (0–80% in 28 min)",
+      processor: 'Intel Core Ultra 7 155H (16-Core, 4.8GHz)',
+      graphics: 'NVIDIA GeForce RTX 4070 8GB GDDR6',
+      memory: '32GB DDR5 5600MHz (Upgradable)',
+      storage: '2TB PCIe Gen4 NVMe M.2 SSD',
+      display: '16" QHD+ (2560 x 1600) 240Hz 3ms G-SYNC',
+      battery: '90Wh with 240W GaN Adapter',
+      weight: '2.61 kg / 5.75 lbs',
+      chassis: 'Dark Metallic Moon Magnesium Alloy',
+      cpu: 'Intel Core Ultra 7 155H (16-Core, 4.8GHz)',
+      gpu: 'NVIDIA GeForce RTX 4070 8GB GDDR6',
+      ram: '32GB DDR5 5600MHz',
+      ports: ['1x Thunderbolt 4', '1x USB-C 3.2 Gen 2', '2x USB-A 3.2 Gen 1', '1x HDMI 2.1', 'RJ-45 Ethernet'],
+      cpuClock: '16-Core up to 4.8 GHz Max Turbo',
+      gpuVramAndCores: '8GB GDDR6 140W Max TGP',
+      memoryBandwidth: '5600 MT/s DDR5 Dual Slot',
+      displayPeakNits: '300 nits ComfortView Plus',
+      coolingTech: 'Alienware Cryo-Tech Vapor Chamber',
+      dimensions: '363.9 x 249.4 x 23.5 mm',
+      rapidCharge: 'ExpressCharge Boost',
       displayInches: 16.0,
-      performanceIndex: 93,
+      performanceIndex: 96
     },
     filterMeta: {
-      seriesGroup: "Blade Series (Gaming)",
-      displaySizeGroup: "16-inch",
-      memoryGroup: "64GB LPDDR5X",
-      gpuTierGroup: "NVIDIA RTX 50-Series",
+      seriesGroup: 'Blade Series (Gaming)',
+      displaySizeGroup: '16-inch',
+      memoryGroup: '32GB Unified',
+      gpuTierGroup: 'NVIDIA RTX 50-Series'
     },
     benchmarkScore: {
-      name: "3DMark Time Spy Extreme / Cyberpunk Path Tracing",
-      score: "24,680 pts // 164 FPS",
+      name: 'Time Spy Extreme Graphics',
+      score: '13,200 pts'
     },
+    keyFeatures: [
+      'Alienware Cryo-Tech Vapor Chamber Cooling',
+      'Per-Key AlienFX RGB Backlit Keyboard',
+      'Dedicated Stealth Mode Hotkey'
+    ]
   },
   {
-    id: "tk-stealth-blade-14",
-    slug: "tk-stealth-blade-14",
-    name: "TK Stealth Blade 14",
-    category: "Gaming Blade",
-    series: "Stealth Blade",
-    tagline: "Compact esports weapon with dual-phase titanium vapor chamber.",
-    description:
-      "Maximum lethality in a 14-inch footprint. Pairs ultra-high refresh OLED clarity with an AI-tuned power envelope that transitions silently from tournament stage to flight cabin.",
-    basePrice: 1999,
-    monthlyFinancingPrice: 79,
-    rating: 4.89,
-    reviewsCount: 289,
-    inStock: true,
-    badges: ["Esports Edition", "Vapor Chamber", "New Gen 3"],
-    featuredImage:
-      "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1400&q=85",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=1600&q=85",
-      "https://images.unsplash.com/photo-1603302576837-37561b2e2302?auto=format&fit=crop&w=1600&q=85",
-    ],
-    specs: {
-      cpu: "AMD Ryzen AI 9 HX 395 16-Core",
-      gpu: "GeForce RTX 5070 Ti Mobile 12GB (140W TGP)",
-      ram: "32GB Unified LPDDR5X-8000MHz",
-      storage: "1TB PCIe Gen5 NVMe (13,500 MB/s)",
-      display: "14.0\" 3K 240Hz ProOLED (0.1ms, 100% DCI-P3)",
-      battery: "84.0Whr — Up to 17h battery life",
-      weight: "1.36 kg (2.99 lbs)",
-      ports: [
-        "2x USB4 / Thunderbolt 4",
-        "2x USB-A 3.2 Gen 2",
-        "1x HDMI 2.1",
-        "3.5mm Combo Audio",
-      ],
-      cpuClock: "16-Core Zen 5 @ up to 5.4 GHz Precision Boost",
-      gpuVramAndCores: "6,144 CUDA Cores // 12GB GDDR7 (140W TGP)",
-      memoryBandwidth: "512 GB/s Low-Latency LPDDR5X (Up to 64GB)",
-      displayPeakNits: "2880 × 1800 • 240Hz (0.1ms) • 1,000 nits HDR",
-      coolingTech: "Dual Vapor-Plate Titanium Thermal Matrix",
-      dimensions: "310.7 × 228.0 × 15.2 mm (1.36 kg)",
-      rapidCharge: "200W USB-C PD 3.1 + Slim Brick (0–80% in 30 min)",
-      displayInches: 14.0,
-      performanceIndex: 88,
-    },
-    filterMeta: {
-      seriesGroup: "Blade Series (Gaming)",
-      displaySizeGroup: "14-inch",
-      memoryGroup: "32GB Unified",
-      gpuTierGroup: "NVIDIA RTX 50-Series",
-    },
-    benchmarkScore: {
-      name: "3DMark Speed Way / Valorant 1440p",
-      score: "19,420 pts // 580+ FPS",
-    },
-  },
-  {
-    id: "tk-air-carbon-13",
-    slug: "tk-air-carbon-13",
-    name: "TK Air Carbon 13",
-    category: "Ultraportable",
-    series: "Titan AI",
-    tagline: "Featherlight 890g aerospace carbon fiber executive ultraportable.",
-    description:
-      "Monocoque Toray T1100G carbon weave fused with magnesium-lithium alloy. Delivers fanless zero-decibel acoustics, instant-wake cellular connectivity, and 24-hour transcontinental endurance.",
-    basePrice: 1399,
-    monthlyFinancingPrice: 55,
+    id: 'hp-spectre-x360-16',
+    slug: 'hp-spectre-x360-16',
+    name: 'HP Spectre x360 16 2-in-1',
+    brand: 'HP',
+    series: 'Spectre',
+    categoryLabel: 'Executive Convertible Workstation',
+    category: 'Executive Convertible Workstation',
+    tagline: 'Gem-cut architectural design with IMAX Enhanced OLED flexibility.',
+    description: 'Gem-cut architectural design with IMAX Enhanced OLED flexibility and AI-assisted presence detection.',
+    basePrice: 2199,
+    monthlyFinancingPrice: 92,
     rating: 4.94,
-    reviewsCount: 412,
-    inStock: true,
-    badges: ["890g Featherlight", "24h Battery", "Zero-dB Fanless"],
-    featuredImage:
-      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=1400&q=85",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?auto=format&fit=crop&w=1600&q=85",
-      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1600&q=85",
+    reviewsCount: 128,
+    badge: 'Flagship',
+    badges: ['Flagship', 'IMAX 2.8K OLED', '2-in-1 Tilt Pen'],
+    images: [
+      'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=80'
     ],
+    featuredImage: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=80'
+    ],
+    inStock: true,
     specs: {
-      cpu: "TK Neural M4 Air 14-Core",
-      gpu: "TK Integrated Ultra 20-Core Raytracing GPU",
-      ram: "32GB Unified LPDDR5X-8533MHz",
-      storage: "1TB PCIe Gen4x4 NVMe (7,400 MB/s)",
-      display: "13.6\" 2.8K Tandem OLED (120Hz ProMotion, Anti-Reflective)",
-      battery: "78.5Whr Silicon-Anode — Up to 24h battery life",
-      weight: "0.89 kg (1.96 lbs)",
-      ports: [
-        "2x Thunderbolt 5",
-        "1x MagCharge Ultra-Slim",
-        "3.5mm Hi-Res Audio",
-        "Nano-SIM + Dual eSIM 5G",
-      ],
-      cpuClock: "14-Core (10P + 4E) @ up to 4.8 GHz High-Efficiency",
-      gpuVramAndCores: "20-Core Integrated Ultra GPU // Shared Unified Pool",
-      memoryBandwidth: "400 GB/s Unified Memory (Up to 32GB)",
-      displayPeakNits: "2880 × 1864 • 120Hz Adaptive • 1,100 nits Peak",
-      coolingTech: "Dual Vapor-Plate Passive Graphene Spreader (0 dB)",
-      dimensions: "299.5 × 212.0 × 10.8 mm (0.89 kg)",
-      rapidCharge: "100W USB-C GaN Nano (0–80% in 29 min)",
-      displayInches: 13.6,
-      performanceIndex: 82,
+      processor: 'Intel Core Ultra 7 155H with Intel AI Boost',
+      graphics: 'NVIDIA GeForce RTX 4050 6GB GDDR6',
+      memory: '32GB LPDDR5x 6400MHz',
+      storage: '1TB PCIe Gen4 NVMe TLC M.2 SSD',
+      display: '16" 2.8K (2880 x 1800) OLED 120Hz Touch 500 Nits',
+      battery: '83Wh (Up to 15 hours)',
+      weight: '1.95 kg / 4.30 lbs',
+      chassis: 'Nightfall Black CNC Aluminum with Pale Brass Accents',
+      cpu: 'Intel Core Ultra 7 155H with Intel AI Boost',
+      gpu: 'NVIDIA GeForce RTX 4050 6GB GDDR6',
+      ram: '32GB LPDDR5x 6400MHz',
+      ports: ['2x Thunderbolt 4 with USB-C 40Gbps', '1x USB-A 10Gbps', '1x HDMI 2.1', '1x Headphone/Mic'],
+      cpuClock: '16-Core Intel AI Boost NPU integrated',
+      gpuVramAndCores: '6GB GDDR6 Dedicated',
+      memoryBandwidth: '6400 MT/s Dual Channel',
+      displayPeakNits: '500 nits HDR Peak IMAX Enhanced',
+      coolingTech: 'Dual Smart-Sensored Silent Cooling',
+      dimensions: '356.8 x 245.5 x 19.8 mm',
+      rapidCharge: 'HP Fast Charge (50% in 30 min)',
+      displayInches: 16.0,
+      performanceIndex: 94
     },
     filterMeta: {
-      seriesGroup: "Air Series (Ultraportable)",
-      displaySizeGroup: "13-inch",
-      memoryGroup: "32GB Unified",
-      gpuTierGroup: "Integrated Ultra",
+      seriesGroup: 'Titan Series (AI/Studio)',
+      displaySizeGroup: '16-inch',
+      memoryGroup: '32GB Unified',
+      gpuTierGroup: 'NVIDIA RTX 50-Series'
     },
     benchmarkScore: {
-      name: "Battery Runtime / Single-Core Efficiency",
-      score: "24h 18m // 4,120 pts/W",
+      name: 'PCMark 10 Extended',
+      score: '9,480 pts'
     },
+    keyFeatures: [
+      '9MP AI IR Webcam with Automatic Auto-Framing',
+      'Quad Audio by Poly Studio',
+      'Includes HP Rechargeable MPP 2.0 Tilt Pen'
+    ]
   },
   {
-    id: "tk-pro-engine-15",
-    slug: "tk-pro-engine-15",
-    name: "TK Pro Engine 15",
-    category: "Ultraportable",
-    series: "Pro Studio",
-    tagline: "Enterprise engineering and Linux-certified daily driver.",
-    description:
-      "Co-engineered with systems architects and kernel maintainers. Ships with mainline Linux & TK-OS dual-boot support, hardware kill-switches, ECC-grade memory integrity, and modular SO-DIMM/M.2 bays.",
+    id: 'hp-omen-transcend-14',
+    slug: 'hp-omen-transcend-14',
+    name: 'HP OMEN Transcend 14',
+    brand: 'HP',
+    series: 'Omen',
+    categoryLabel: 'Ultraportable Studio & Gaming',
+    category: 'Ultraportable Studio & Gaming',
+    tagline: 'The worlds lightest 14-inch gaming laptop with edge-to-edge pudding keycaps.',
+    description: 'The worlds lightest 14-inch gaming laptop with edge-to-edge pudding keycaps and high-efficiency Tempest Cooling Go.',
     basePrice: 1799,
-    monthlyFinancingPrice: 69,
+    monthlyFinancingPrice: 75,
     rating: 4.91,
-    reviewsCount: 264,
-    inStock: true,
-    badges: ["Linux Certified", "Modular Internals", "Enterprise Fleet"],
-    featuredImage:
-      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1400&q=85",
-    galleryImages: [
-      "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1600&q=85",
-      "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1600&q=85",
+    reviewsCount: 94,
+    badge: 'New',
+    badges: ['New', '1.63 kg Lightweight', '2.8K OLED'],
+    images: [
+      'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80'
     ],
+    featuredImage: 'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=1200&q=80',
+    galleryImages: [
+      'https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?auto=format&fit=crop&w=1200&q=80',
+      'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=80'
+    ],
+    inStock: true,
     specs: {
-      cpu: "TK Neural M4 Pro 18-Core",
-      gpu: "TK Neural Tensor 28-Core (20GB)",
-      ram: "64GB LPDDR5X-8533MHz (ECC Certified)",
-      storage: "2TB Dual-Slot PCIe Gen5 NVMe (14,000 MB/s)",
-      display: "16.0\" 3.2K Low-Glare IPS Black (165Hz, 16:10 Golden Ratio)",
-      battery: "92.0Whr — Up to 21h compiling endurance",
-      weight: "1.34 kg (2.95 lbs)",
-      ports: [
-        "3x Thunderbolt 5",
-        "1x USB-A 3.2 Gen 2",
-        "1x HDMI 2.1",
-        "Hardware Privacy Kill-Switch Array",
-      ],
-      cpuClock: "18-Core (14P + 4E) @ up to 5.1 GHz Sustained",
-      gpuVramAndCores: "28-Core TK Neural GPU Core // 20GB ECC Pool",
-      memoryBandwidth: "640 GB/s ECC-Verified Unified (Up to 96GB)",
-      displayPeakNits: "3200 × 2000 • 165Hz • 1,000 nits Low-Glare",
-      coolingTech: "Dual Vapor-Plate Acoustic-Damped Chamber",
-      dimensions: "342.0 × 236.0 × 13.9 mm (1.34 kg)",
-      rapidCharge: "140W USB-C PD 3.1 Rapid Charge (0–80% in 27 min)",
-      displayInches: 16.0,
-      performanceIndex: 90,
+      processor: 'Intel Core Ultra 7 155H (16-Core, 4.8GHz)',
+      graphics: 'NVIDIA GeForce RTX 4060 8GB GDDR6',
+      memory: '16GB LPDDR5X 7467MHz',
+      storage: '1TB PCIe Gen4 NVMe M.2 SSD',
+      display: '14" 2.8K (2880 x 1800) OLED 120Hz 0.2ms HDR 500',
+      battery: '71Wh with 140W USB-C PD Fast Charge',
+      weight: '1.63 kg / 3.60 lbs',
+      chassis: 'Shadow Black Anodized Aluminum',
+      cpu: 'Intel Core Ultra 7 155H (16-Core, 4.8GHz)',
+      gpu: 'NVIDIA GeForce RTX 4060 8GB GDDR6',
+      ram: '16GB LPDDR5X 7467MHz',
+      ports: ['1x Thunderbolt 4 with USB-C 40Gbps', '1x USB-C 10Gbps', '2x USB-A 10Gbps', '1x HDMI 2.1', '1x Headphone/Mic'],
+      cpuClock: '16-Core Intel Core Ultra up to 4.8 GHz',
+      gpuVramAndCores: '8GB GDDR6 65W Max TGP',
+      memoryBandwidth: '7467 MT/s Ultra High Speed',
+      displayPeakNits: '500 nits HDR Peak OLED 0.2ms',
+      coolingTech: 'Tempest Cooling Go Vapor Chamber',
+      dimensions: '313 x 233.5 x 17.99 mm',
+      rapidCharge: '140W USB-C Fast Charge (50% in 30 min)',
+      displayInches: 14.0,
+      performanceIndex: 91
     },
     filterMeta: {
-      seriesGroup: "Air Series (Ultraportable)",
-      displaySizeGroup: "16-inch",
-      memoryGroup: "64GB LPDDR5X",
-      gpuTierGroup: "TK Neural GPU Core",
+      seriesGroup: 'Air Series (Ultraportable)',
+      displaySizeGroup: '14-inch',
+      memoryGroup: '64GB LPDDR5X',
+      gpuTierGroup: 'NVIDIA RTX 50-Series'
     },
     benchmarkScore: {
-      name: "Linux Kernel 6.12 Compile / Docker Buildx",
-      score: "38.4 sec // 99.98% Sustained",
+      name: '3DMark Time Spy',
+      score: '10,420 pts'
     },
-  },
+    keyFeatures: [
+      'Tempest Cooling Go Vapor Chamber',
+      'HyperX Cloud III Wireless Low-Latency Audio Receiver Built-in',
+      'Translucent Pudding Keycaps with RGB Lighting'
+    ]
+  }
 ];
 
-export function getLaptopBySlug(slug: string): LaptopProduct | undefined {
-  return TK_LAPTOPS.find((laptop) => laptop.slug === slug);
+export const TK_LAPTOPS = LAPTOP_PRODUCTS;
+
+export function getAllLaptops(): LaptopProduct[] {
+  return LAPTOP_PRODUCTS;
 }
 
-export function getLaptopById(id: string): LaptopProduct | undefined {
-  return TK_LAPTOPS.find((laptop) => laptop.id === id);
+export function getLaptopsByBrand(brand: 'Dell' | 'HP'): LaptopProduct[] {
+  return LAPTOP_PRODUCTS.filter((laptop) => laptop.brand === brand);
+}
+
+export function getLaptopBySlug(slug: string): LaptopProduct | undefined {
+  return LAPTOP_PRODUCTS.find((laptop) => laptop.slug === slug);
 }

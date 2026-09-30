@@ -1,50 +1,32 @@
-export type LaptopSeries = "Titan AI" | "Pro Studio" | "Stealth Blade";
+export type LaptopBrand = 'Dell' | 'HP';
 
-export type LaptopBadge = "New Release" | "Flagship" | "Best Seller" | string;
+export type FilterSeriesOption = string;
+export type FilterDisplaySizeOption = string;
+export type FilterMemoryOption = string;
+export type FilterGpuTierOption = string;
+export type CatalogSortOption = 'performance-desc' | 'price-asc' | 'price-desc' | 'display-desc';
+export type ProductCategory = string;
+export type LaptopSeries = string;
+export type LaptopBadge = string;
 
-export type ProductCategory =
-  | "Flagship"
-  | "AI & Workstation"
-  | "Gaming Blade"
-  | "Ultraportable";
-
-export type FilterSeriesOption =
-  | "Titan Series (AI/Studio)"
-  | "Blade Series (Gaming)"
-  | "Air Series (Ultraportable)";
-
-export type FilterDisplaySizeOption =
-  | "13-inch"
-  | "14-inch"
-  | "16-inch"
-  | "18-inch";
-
-export type FilterMemoryOption =
-  | "32GB Unified"
-  | "64GB LPDDR5X"
-  | "128GB Extreme";
-
-export type FilterGpuTierOption =
-  | "NVIDIA RTX 50-Series"
-  | "TK Neural GPU Core"
-  | "Integrated Ultra";
-
-export type CatalogSortOption =
-  | "performance-desc"
-  | "price-asc"
-  | "price-desc"
-  | "display-desc";
+export interface BenchmarkScore {
+  name: string;
+  score: string;
+}
 
 export interface ProductSpec {
-  cpu: string;
-  gpu: string;
-  ram: string;
+  processor: string;
+  graphics: string;
+  memory: string;
   storage: string;
   display: string;
   battery: string;
   weight: string;
-  ports: string[];
-  // Extended engineering telemetry for side-by-side comparison & sorting
+  chassis: string;
+  cpu?: string;
+  gpu?: string;
+  ram?: string;
+  ports?: string[];
   cpuClock?: string;
   gpuVramAndCores?: string;
   memoryBandwidth?: string;
@@ -58,35 +40,84 @@ export interface ProductSpec {
 
 export type LaptopSpecs = ProductSpec;
 
-export interface BenchmarkScore {
-  name: string;
-  score: string;
-}
-
 export interface ProductFilterMeta {
-  seriesGroup: FilterSeriesOption;
-  displaySizeGroup: FilterDisplaySizeOption;
-  memoryGroup: FilterMemoryOption;
-  gpuTierGroup: FilterGpuTierOption;
+  seriesGroup?: FilterSeriesOption;
+  displaySizeGroup?: FilterDisplaySizeOption;
+  memoryGroup?: FilterMemoryOption;
+  gpuTierGroup?: FilterGpuTierOption;
 }
 
 export interface LaptopProduct {
   id: string;
   slug: string;
   name: string;
-  category: ProductCategory;
+  brand: LaptopBrand;
+  series: 'XPS' | 'Spectre' | 'Alienware' | 'Omen' | 'Latitude' | 'Envy' | string;
+  categoryLabel: string;
   tagline: string;
-  description: string;
   basePrice: number;
+  badge?: 'Flagship' | 'New' | 'Best Seller' | 'Top Tier' | string;
+  images: string[];
+  inStock: boolean;
+  specs: {
+    processor: string;
+    graphics: string;
+    memory: string;
+    storage: string;
+    display: string;
+    battery: string;
+    weight: string;
+    chassis: string;
+    cpu: string;
+    gpu: string;
+    ram: string;
+    ports: string[];
+    cpuClock?: string;
+    gpuVramAndCores?: string;
+    memoryBandwidth?: string;
+    displayPeakNits?: string;
+    coolingTech?: string;
+    dimensions?: string;
+    rapidCharge?: string;
+    displayInches?: number;
+    performanceIndex?: number;
+  };
+  keyFeatures: string[];
+  category: string;
+  description: string;
   monthlyFinancingPrice: number;
   rating: number;
   reviewsCount: number;
   badges: string[];
   featuredImage: string;
   galleryImages: string[];
-  specs: ProductSpec;
   benchmarkScore: BenchmarkScore;
-  filterMeta?: ProductFilterMeta;
-  inStock?: boolean;
-  series?: LaptopSeries;
+  filterMeta: ProductFilterMeta;
 }
+
+export type PerfumeConcentration = 'Eau de Parfum' | 'Parfum Extrait';
+
+export interface PerfumeProduct {
+  id: string;
+  slug: string;
+  name: string;
+  collection: 'TK Signature' | 'TK Royal Oud' | 'TK Noir' | 'TK Fresh Amber';
+  tagline: string;
+  volume: string; // e.g. "100ml / 3.4 fl. oz."
+  basePrice: number;
+  badge?: 'Best Seller' | 'Limited Edition' | 'New Release';
+  concentration: PerfumeConcentration;
+  scentFamily: string; // e.g. "Woody Oriental", "Smoky Amber", "Aromatic Citrus"
+  notes: {
+    top: string[];
+    heart: string[];
+    base: string[];
+  };
+  images: string[];
+  inStock: boolean;
+  description: string;
+}
+
+export type StoreProduct = 
+  | ({ productType: 'laptop' } & LaptopProduct)
+  | ({ productType: 'perfume' } & PerfumeProduct);

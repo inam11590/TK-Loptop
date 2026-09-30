@@ -1,229 +1,136 @@
-"use client";
+'use client';
 
-import React, { useState, useMemo } from "react";
-import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { Layers, Cpu, Gamepad2, Feather, ArrowUpRight } from "lucide-react";
-import { TK_LAPTOPS } from "@/data/products";
-import type { LaptopProduct } from "@/types/product";
-import { ProductCard } from "@/components/ui/ProductCard";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
-import { CompareDock } from "@/components/catalog/CompareDock";
-import { CompareModal } from "@/components/catalog/CompareModal";
-import { cn } from "@/lib/utils";
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { LAPTOP_PRODUCTS } from '@/data/products';
+import { Cpu, Eye, HardDrive, ArrowRight, ShieldCheck } from 'lucide-react';
 
-export type CatalogFilterTab =
-  | "All Systems"
-  | "AI & Workstation"
-  | "Gaming Blade"
-  | "Ultraportable";
+export default function FeaturedLaptops() {
+  const [selectedBrand, setSelectedBrand] = useState<'All' | 'Dell' | 'HP'>('All');
 
-interface FilterTabConfig {
-  id: CatalogFilterTab;
-  label: CatalogFilterTab;
-  icon: React.ComponentType<{ className?: string }>;
-}
-
-const FILTER_TABS: FilterTabConfig[] = [
-  { id: "All Systems", label: "All Systems", icon: Layers },
-  { id: "AI & Workstation", label: "AI & Workstation", icon: Cpu },
-  { id: "Gaming Blade", label: "Gaming Blade", icon: Gamepad2 },
-  { id: "Ultraportable", label: "Ultraportable", icon: Feather },
-];
-
-export function FeaturedLaptops() {
-  const [activeTab, setActiveTab] = useState<CatalogFilterTab>("All Systems");
-  const [comparedIds, setComparedIds] = useState<string[]>([]);
-  const [compareModalOpen, setCompareModalOpen] = useState(false);
-
-  const filteredLaptops = useMemo(() => {
-    if (activeTab === "All Systems") {
-      return TK_LAPTOPS;
-    }
-    if (activeTab === "AI & Workstation") {
-      return TK_LAPTOPS.filter(
-        (laptop) =>
-          laptop.category === "AI & Workstation" ||
-          laptop.category === "Flagship"
-      );
-    }
-    return TK_LAPTOPS.filter((laptop) => laptop.category === activeTab);
-  }, [activeTab]);
-
-  const getTabCount = (tab: CatalogFilterTab) => {
-    if (tab === "All Systems") return TK_LAPTOPS.length;
-    if (tab === "AI & Workstation") {
-      return TK_LAPTOPS.filter(
-        (l) => l.category === "AI & Workstation" || l.category === "Flagship"
-      ).length;
-    }
-    return TK_LAPTOPS.filter((l) => l.category === tab).length;
-  };
-
-  const selectedComparisonLaptops = useMemo(
-    () =>
-      comparedIds
-        .map((id) => TK_LAPTOPS.find((item) => item.id === id))
-        .filter((item): item is LaptopProduct => Boolean(item)),
-    [comparedIds]
-  );
-
-  const handleToggleCompare = (laptop: LaptopProduct) => {
-    setComparedIds((prev) => {
-      if (prev.includes(laptop.id)) {
-        return prev.filter((id) => id !== laptop.id);
-      }
-      if (prev.length >= 3) return prev;
-      return [...prev, laptop.id];
-    });
-  };
+  const filteredLaptops = selectedBrand === 'All' 
+    ? LAPTOP_PRODUCTS 
+    : LAPTOP_PRODUCTS.filter(l => l.brand === selectedBrand);
 
   return (
-    <section
-      id="catalog"
-      aria-label="The Apex Portfolio Featured Laptops"
-      className="relative py-24 sm:py-32 border-t border-white/[0.06] overflow-hidden"
-    >
-      {/* Ambient Background Glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10"
-      >
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 h-[520px] w-[980px] rounded-full bg-[#00f0ff]/[0.04] blur-[150px]" />
-      </div>
-
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section id="laptops" className="relative py-24 px-4 sm:px-6 lg:px-8 bg-[#050507]">
+      <div className="mx-auto max-w-7xl">
+        
         {/* Section Header */}
-        <div className="mx-auto max-w-3xl text-center">
-          <Badge variant="cyan" pulse className="mb-5">
-            THE APEX PORTFOLIO // 2026 RELEASES
-          </Badge>
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div>
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-xs font-mono tracking-wider uppercase mb-3">
+              <ShieldCheck className="w-3.5 h-3.5" />
+              <span>Authorized Flagship Hardware</span>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
+              Dell & HP Performance Fleet
+            </h2>
+            <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-xl">
+              Precision-curated Dell XPS, Alienware, HP Spectre, and OMEN flagship workstations with verified warranty and express courier dispatch.
+            </p>
+          </div>
 
-          <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#f8fafc] leading-tight">
-            Engineered for Every{" "}
-            <span className="bg-gradient-to-r from-[#f8fafc] via-[#00f0ff] to-[#3b82f6] bg-clip-text text-transparent">
-              Threshold of Performance
-            </span>
-          </h2>
-
-          <p className="mt-4 text-base sm:text-lg text-[#94a3b8] leading-relaxed">
-            From extreme neural network training to ultra-responsive competitive
-            play.
-          </p>
-        </div>
-
-        {/* Interactive Category Filter Tabs */}
-        <div className="mt-10 flex justify-center">
-          <div
-            role="tablist"
-            aria-label="Filter laptops by performance category"
-            className="inline-flex flex-wrap items-center justify-center gap-2 rounded-2xl bg-[#0d0e15] border border-[#1f2232] p-2 shadow-[0_10px_30px_-10px_rgba(0,0,0,0.8)]"
-          >
-            {FILTER_TABS.map((tab) => {
-              const IconComponent = tab.icon;
-              const isSelected = activeTab === tab.id;
-              const count = getTabCount(tab.id);
-
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  role="tab"
-                  aria-selected={isSelected}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={cn(
-                    "relative inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer",
-                    isSelected
-                      ? "bg-[#00f0ff] text-[#050507] font-semibold glow-cyan"
-                      : "text-[#94a3b8] hover:text-[#f8fafc] hover:bg-white/[0.04]"
-                  )}
-                >
-                  <IconComponent
-                    className={cn(
-                      "h-4 w-4 shrink-0",
-                      isSelected ? "text-[#050507]" : "text-[#00f0ff]"
-                    )}
-                  />
-                  <span>{tab.label}</span>
-                  <span
-                    className={cn(
-                      "rounded-full px-1.5 py-0.5 font-mono text-[10px]",
-                      isSelected
-                        ? "bg-[#050507]/20 text-[#050507] font-bold"
-                        : "bg-white/[0.06] text-[#94a3b8]"
-                    )}
-                  >
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
+          {/* Brand Filter Tabs */}
+          <div className="flex items-center gap-2 bg-white/[0.03] p-1.5 rounded-xl border border-white/[0.08] self-start md:self-auto">
+            {(['All', 'Dell', 'HP'] as const).map((brand) => (
+              <button
+                key={brand}
+                onClick={() => setSelectedBrand(brand)}
+                className={`px-5 py-2 rounded-lg text-xs font-semibold transition-all duration-200 ${
+                  selectedBrand === brand
+                    ? 'bg-cyan-400 text-black shadow-[0_0_15px_rgba(0,240,255,0.4)]'
+                    : 'text-slate-400 hover:text-white hover:bg-white/[0.04]'
+                }`}
+              >
+                {brand === 'All' ? 'All Hardware' : `${brand} Machines`}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Responsive 3-Column / 2-Column / 1-Column Product Grid with Smooth Transitions */}
-        <motion.div
-          layout
-          className="mt-12 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3"
-        >
-          <AnimatePresence mode="popLayout">
-            {filteredLaptops.map((laptop) => (
-              <motion.div
-                key={laptop.id}
-                layout
-                initial={{ opacity: 0, y: 18, scale: 0.98 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.25, ease: "easeOut" }}
-                className="flex"
-              >
-                <ProductCard
-                  product={laptop}
-                  isCompared={comparedIds.includes(laptop.id)}
-                  onToggleCompare={handleToggleCompare}
-                  compareDisabled={comparedIds.length >= 3}
-                  className="w-full"
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
-
-        {/* Bottom CTA to Full Hardware Catalog & Filter Matrix */}
-        <div className="mt-14 flex justify-center">
-          <Link href="/catalog">
-            <Button
-              variant="outline"
-              size="lg"
-              rightIcon={<ArrowUpRight className="h-4 w-4" />}
+        {/* Laptops Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {filteredLaptops.map((laptop) => (
+            <div
+              key={laptop.id}
+              className="group relative flex flex-col rounded-3xl bg-[#0b0c13] border border-white/[0.08] hover:border-cyan-400/40 transition-all duration-500 p-6 hover:shadow-[0_0_30px_-5px_rgba(0,240,255,0.2)]"
             >
-              Open Full Hardware Catalog & Spec Filter Matrix
-            </Button>
-          </Link>
+              {/* Card Header */}
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-xs font-mono font-semibold tracking-wider px-3 py-1 rounded-full bg-white/[0.05] text-cyan-300 border border-white/10">
+                  {laptop.brand.toUpperCase()} // {laptop.series}
+                </span>
+                {laptop.badge && (
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-black bg-cyan-400 px-2.5 py-0.5 rounded-full">
+                    {laptop.badge}
+                  </span>
+                )}
+              </div>
+
+              {/* Laptop Image */}
+              <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-[#07080d] mb-6">
+                <Image
+                  src={laptop.images[0]}
+                  alt={laptop.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 opacity-90 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0b0c13] via-transparent to-transparent opacity-60" />
+              </div>
+
+              {/* Title & Tagline */}
+              <div className="mb-6">
+                <h3 className="text-2xl font-bold text-white group-hover:text-cyan-300 transition-colors">
+                  {laptop.name}
+                </h3>
+                <p className="text-xs text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                  {laptop.tagline}
+                </p>
+              </div>
+
+              {/* Spec HUD Grid */}
+              <div className="grid grid-cols-2 gap-3 mb-6 font-mono text-xs">
+                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <Cpu className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+                  <span className="text-slate-300 truncate">{laptop.specs.processor.split('(')[0]}</span>
+                </div>
+                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <Eye className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+                  <span className="text-slate-300 truncate">{laptop.specs.graphics.split(' ')[0]} {laptop.specs.graphics.split(' ')[1]}</span>
+                </div>
+                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <HardDrive className="w-4 h-4 text-cyan-400 flex-shrink-0" />
+                  <span className="text-slate-300 truncate">{laptop.specs.memory.split(' ')[0]} RAM</span>
+                </div>
+                <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-white/[0.02] border border-white/[0.06]">
+                  <span className="text-cyan-400 font-bold ml-1">SSD</span>
+                  <span className="text-slate-300 truncate">{laptop.specs.storage.split(' ')[0]} Gen4</span>
+                </div>
+              </div>
+
+              {/* Price & Action */}
+              <div className="mt-auto flex items-center justify-between pt-5 border-t border-white/[0.08]">
+                <div>
+                  <span className="text-[10px] uppercase font-mono tracking-wider text-slate-400 block">Starting From</span>
+                  <span className="text-2xl font-extrabold text-white">${laptop.basePrice.toLocaleString()}</span>
+                </div>
+
+                <Link
+                  href={`/catalog/${laptop.slug}`}
+                  className="flex items-center gap-2 px-5 py-3 rounded-xl bg-cyan-400 text-black font-semibold text-xs hover:bg-cyan-300 hover:shadow-[0_0_20px_-3px_rgba(0,240,255,0.6)] transition-all duration-300"
+                >
+                  <span>Configure & Buy</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
+
       </div>
-
-      {/* Floating Comparison Dock & Modal */}
-      <CompareDock
-        selectedLaptops={selectedComparisonLaptops}
-        onRemoveLaptop={(id) =>
-          setComparedIds((prev) => prev.filter((item) => item !== id))
-        }
-        onClearAll={() => setComparedIds([])}
-        onOpenModal={() => setCompareModalOpen(true)}
-      />
-
-      <CompareModal
-        isOpen={compareModalOpen}
-        onClose={() => setCompareModalOpen(false)}
-        laptops={selectedComparisonLaptops}
-        onRemoveLaptop={(id) =>
-          setComparedIds((prev) => prev.filter((item) => item !== id))
-        }
-      />
     </section>
   );
 }
-
-export default FeaturedLaptops;
