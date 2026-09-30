@@ -1,4 +1,4 @@
-export type LaptopBrand = 'Dell' | 'HP';
+export type LaptopBrand = 'Dell' | 'HP' | 'Apple';
 
 export type FilterSeriesOption = string;
 export type FilterDisplaySizeOption = string;
@@ -23,10 +23,10 @@ export interface ProductSpec {
   battery: string;
   weight: string;
   chassis: string;
-  cpu?: string;
-  gpu?: string;
-  ram?: string;
-  ports?: string[];
+  cpu: string;
+  gpu: string;
+  ram: string;
+  ports: string[];
   cpuClock?: string;
   gpuVramAndCores?: string;
   memoryBandwidth?: string;
@@ -52,11 +52,11 @@ export interface LaptopProduct {
   slug: string;
   name: string;
   brand: LaptopBrand;
-  series: 'XPS' | 'Spectre' | 'Alienware' | 'Omen' | 'Latitude' | 'Envy' | string;
+  series: string;
   categoryLabel: string;
   tagline: string;
   basePrice: number;
-  badge?: 'Flagship' | 'New' | 'Best Seller' | 'Top Tier' | string;
+  badge?: 'Flagship' | 'New' | 'Best Seller' | 'Top Tier';
   images: string[];
   inStock: boolean;
   specs: {
@@ -101,13 +101,13 @@ export interface PerfumeProduct {
   id: string;
   slug: string;
   name: string;
-  collection: 'TK Signature' | 'TK Royal Oud' | 'TK Noir' | 'TK Fresh Amber';
+  collection: string;
   tagline: string;
-  volume: string; // e.g. "100ml / 3.4 fl. oz."
+  volume: string;
   basePrice: number;
   badge?: 'Best Seller' | 'Limited Edition' | 'New Release';
   concentration: PerfumeConcentration;
-  scentFamily: string; // e.g. "Woody Oriental", "Smoky Amber", "Aromatic Citrus"
+  scentFamily: string;
   notes: {
     top: string[];
     heart: string[];
